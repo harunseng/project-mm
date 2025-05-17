@@ -48,3 +48,4 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  itemPrototypeSpawner: {fileID: 7221239672484889201, guid: 30e932c3f9eafa04787ba8ce57b8a825, type: 3}
