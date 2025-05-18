@@ -17,6 +17,7 @@ namespace ProjectMM.Core.Scene
         #endregion
 
         [Inject] protected IPresenterFactory PresenterFactory;
+        [Inject] protected IObjectResolver Container;
 
         public abstract UniTask InitializeAsync(CancellationToken token, IProgress<float> progress = null);
 
