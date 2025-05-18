@@ -40,7 +40,7 @@ namespace ProjectMM.Core.ObjectPool
                 _objectPool.Release(component);
                 return component;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }

@@ -19,7 +19,7 @@ namespace ProjectMM.Core.Scene
         [Inject] protected IPresenterFactory PresenterFactory;
         [Inject] protected IObjectResolver Container;
 
-        public abstract UniTask InitializeAsync(CancellationToken token, IProgress<float> progress = null);
+        public abstract UniTask InitializeAsync(CancellationToken token, ISceneOptions options = null, IProgress<float> progress = null);
 
         public virtual void OnSceneActivated()
         {

@@ -29,7 +29,7 @@ namespace ProjectMM.Core.Common.Factories
 
                 return presenter;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 if (handle.IsValid())
                 {

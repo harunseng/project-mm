@@ -7,9 +7,6 @@ using UnityEngine;
 
 namespace ProjectMM.Scope.Loader
 {
-    /// <summary>
-    /// View that displays loading progress while transitioning to the gameplay scene
-    /// </summary>
     public class LoaderView : MonoBehaviour
     {
         #region Inspector
@@ -21,6 +18,11 @@ namespace ProjectMM.Scope.Loader
         public void LoadGameplayScene()
         {
             SceneLoader.LoadSceneAsync(GameConstants.SceneNames.Gameplay, this.GetCancellationTokenOnDestroy(), new Progress<float>(progress => _ProgressBar.SetFillAmount(progress))).Forget();
+        }
+
+        public void LoadHomeScene()
+        {
+            SceneLoader.LoadSceneAsync(GameConstants.SceneNames.Home, this.GetCancellationTokenOnDestroy(), new Progress<float>(progress => _ProgressBar.SetFillAmount(progress))).Forget();
         }
     }
 }

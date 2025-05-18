@@ -7,7 +7,7 @@ namespace ProjectMM.Scope.Gameplay.Item
     {
         public enum ItemType
         {
-            Backpack, Bomb, Bottle, Dynamite, FryingPang, PiggyBank, Smiley, SoccerBoot, SteeringWheel, WaterMine
+            Backpack, Bomb, Bottle, Dynamite, FryingPan, PiggyBank, Smiley, SoccerBoot, SteeringWheel, WaterMine
         }
 
         #region Inspector
@@ -15,11 +15,13 @@ namespace ProjectMM.Scope.Gameplay.Item
         [SerializeField] private ItemType _Type;
         [SerializeField] private Mesh _MeshFilter;
         [SerializeField] private Mesh _MeshCollider;
+        [SerializeField] private Sprite _Sprite;
 
         #endregion
 
+        public ItemType Type => _Type;
         public Mesh Filter => _MeshFilter;
         public Mesh Collider => _MeshCollider;
-        public ItemType Type => _Type;
+        public Sprite Sprite => _Sprite;
     }
 }

@@ -8,7 +8,7 @@ namespace ProjectMM.Core.Scene
 {
     public static class SceneLoader
     {
-        public static async UniTask LoadSceneAsync(string name, CancellationToken token, IProgress<float> progress = null)
+        public static async UniTask LoadSceneAsync(string name, CancellationToken token, IProgress<float> progress = null, ISceneOptions options = null)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace ProjectMM.Core.Scene
                         continue;
                     }
 
-                    await sceneInitializer.InitializeAsync(token, progress);
+                    await sceneInitializer.InitializeAsync(token, options, progress);
                     break;
                 }
                 progress?.Report(1f);
@@ -61,7 +61,7 @@ namespace ProjectMM.Core.Scene
 
                 sceneInitializer?.OnSceneActivated();
             }
-            catch (OperationCanceledException e)
+            catch (OperationCanceledException)
             {
             }
         }

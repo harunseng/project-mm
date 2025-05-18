@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Pool;
 
 namespace ProjectMM.Core.ObjectPool
@@ -8,6 +9,9 @@ namespace ProjectMM.Core.ObjectPool
         private readonly IObjectPool<T> _objectPool;
         private readonly Transform _parent;
         private readonly T _prefab;
+        private readonly HashSet<T> _items = new HashSet<T>();
+
+        public IReadOnlyCollection<T> Items => _items;
 
         public GameObjectPool(T prefab, Transform parent = null)
         {
@@ -26,7 +30,9 @@ namespace ProjectMM.Core.ObjectPool
 
         public T Get()
         {
-            return _objectPool.Get();
+            var item = _objectPool.Get();
+            _items.Add(item);
+            return item;
         }
 
         public void Release(T obj)

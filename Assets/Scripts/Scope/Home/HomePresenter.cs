@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using ProjectMM.Core.Common.Presenter;
 using ProjectMM.Core.Constants;
 using ProjectMM.Core.Scene;
+using ProjectMM.Scope.Loader;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,10 +31,11 @@ namespace ProjectMM.Scope.Home
         {
             try
             {
-                await SceneLoader.LoadSceneAsync(GameConstants.SceneNames.Loader, this.GetCancellationTokenOnDestroy()).SuppressCancellationThrow();
+                await SceneLoader.LoadSceneAsync(GameConstants.SceneNames.Loader, this.GetCancellationTokenOnDestroy(), options: new LoaderSceneOptions { SceneName = GameConstants.SceneNames.Gameplay }).SuppressCancellationThrow();
             }
-            catch (Exception e)
+            catch (Exception)
             {
+                //NOOP
             }
         }
     }

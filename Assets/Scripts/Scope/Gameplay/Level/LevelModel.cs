@@ -23,6 +23,7 @@ namespace ProjectMM.Scope.Gameplay.Level
             public int count;
         }
 
+        public int seconds;
         public List<Orders> itemOrders;
         public List<Layout> itemLayouts;
     }

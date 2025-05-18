@@ -29,5 +29,16 @@ namespace ProjectMM.Scope.Root
         {
             _itemPrototypePool.Release(itemPrototype);
         }
+
+        public void ReleaseAll()
+        {
+            foreach (var itemPrototype in _itemPrototypePool.Items)
+            {
+                if (itemPrototype.gameObject.activeInHierarchy)
+                {
+                    ReleaseItemPrototype(itemPrototype);
+                }
+            }
+        }
     }
 }
