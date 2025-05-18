@@ -9,5 +9,6 @@ namespace ProjectMM.Core.Services
         public int level;
         public int metaGameIndex;
         public int metaGameProgress;
+        public int latestCompletedLevel;
     }
 }

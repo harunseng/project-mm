@@ -19,7 +19,7 @@ namespace ProjectMM.Scope.Home
             presenter.SetUICamera(_UICamera);
             presenter.GameObject.SetActive(true);
 
-            var player = _playerRepository.Load(); 
+            var player = _playerRepository.Load();
             if (player.level == 0)
             {
                 player.level = 1;

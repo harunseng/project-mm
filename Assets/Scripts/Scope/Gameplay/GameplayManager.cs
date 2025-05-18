@@ -4,6 +4,7 @@ using DG.Tweening;
 using ProjectMM.Core.Common.Factories;
 using ProjectMM.Core.Constants;
 using ProjectMM.Core.Scene;
+using ProjectMM.Core.Services;
 using ProjectMM.Scope.Gameplay.Item;
 using ProjectMM.Scope.Gameplay.Level;
 using ProjectMM.Scope.Gameplay.Presenters;
@@ -22,12 +23,13 @@ namespace ProjectMM.Scope.Gameplay
 
         #endregion
         
+        [Inject] private IObjectResolver _container;
+        [Inject] private IPresenterFactory _presenterFactory;
         [Inject] private ItemPrototypeSpawner _itemPrototypeSpawner;
         [Inject] private ItemSlotsController _slotController;
         [Inject] private BoardTracker _boardTracker;
         [Inject] private LevelTimer _levelTimer;
-        [Inject] private IPresenterFactory _presenterFactory;
-        [Inject] private IObjectResolver _container;
+        [Inject] private IPlayerRepositoryService _playerRepository;
 
         private const int MatchCount = 3;
 
@@ -86,6 +88,7 @@ namespace ProjectMM.Scope.Gameplay
 
         public void EndGameplay()
         {
+            DOTween.KillAll();
             _itemPrototypeSpawner.ReleaseAll();
 
             SceneLoader.LoadSceneAsync(GameConstants.SceneNames.Loader, this.GetCancellationTokenOnDestroy(), options: new LoaderSceneOptions { SceneName = GameConstants.SceneNames.Home }).Forget();
@@ -119,7 +122,7 @@ namespace ProjectMM.Scope.Gameplay
 
             foreach (var item in items)
             {
-                item.MoveToMergePoint(new Vector3(mergePointX, 0, item.transform.position.z + offset), () =>_itemPrototypeSpawner.ReleaseItemPrototype(item));
+                item.MoveToMergePoint(new Vector3(mergePointX, 0, item.transform.position.z + offset), () => _itemPrototypeSpawner.ReleaseItemPrototype(item));
             }
             _boardTracker.RemoveItemCount(items[0].Type, items.Count);
             _slotController.ReleaseLastMatchedSlots();
@@ -128,6 +131,12 @@ namespace ProjectMM.Scope.Gameplay
 
         private void OnOrdersCompleted()
         {
+            var player = _playerRepository.Load();
+            player.latestCompletedLevel = player.level;
+            player.level += 1;
+            player.gold += 1;
+            _playerRepository.Save(player);
+
             ShowGameOver().Forget();
         }
 

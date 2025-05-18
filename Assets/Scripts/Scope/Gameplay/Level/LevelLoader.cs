@@ -1,10 +1,14 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using ProjectMM.Core.Services;
 using ProjectMM.Scope.Gameplay.Item;
 using ProjectMM.Scope.Root;
+using ProjectMM.Utils;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using Random = UnityEngine.Random;
 
 namespace ProjectMM.Scope.Gameplay.Level
 {
@@ -32,7 +36,16 @@ namespace ProjectMM.Scope.Gameplay.Level
         {
             var player = _playerRepository.Load();
 
-            var handle = Addressables.LoadAssetAsync<LevelData>($"{LevelData}{player.level}");
+            var key = $"{LevelData}{player.level}";
+            var isKeyExists = await AddressableKeyChecker.KeyExistsAsync(key);
+            if (!isKeyExists)
+            {
+                player.level -= 1;
+                _playerRepository.Save(player);
+
+                key = $"{LevelData}{player.latestCompletedLevel}";
+            }
+            var handle = Addressables.LoadAssetAsync<LevelData>(key);
             var isCancelled = await handle.ToUniTask(cancellationToken: token).SuppressCancellationThrow();
             if (isCancelled)
             {

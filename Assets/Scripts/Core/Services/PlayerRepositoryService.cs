@@ -23,9 +23,9 @@ namespace ProjectMM.Core.Services
             }
 
             var data = PlayerPrefs.GetString(PlayerDataKey);
-            _cachedData = JsonUtility.FromJson<PlayerData>(data);
+            _cachedData = string.IsNullOrEmpty(data) ? default : JsonUtility.FromJson<PlayerData>(data);
 
-            return string.IsNullOrEmpty(data) ? default : _cachedData;
+            return _cachedData;
         }
 
         public void Clear()
