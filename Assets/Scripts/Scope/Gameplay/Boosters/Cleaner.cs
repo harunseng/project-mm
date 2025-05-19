@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using ProjectMM.Scope.Gameplay.Item;
 using ProjectMM.Scope.Gameplay.Level;
 using ProjectMM.Scope.Root;
 
@@ -27,7 +29,8 @@ namespace ProjectMM.Scope.Gameplay.Boosters
         {
             foreach (var type in _boardTracker.Orders.Keys.ToList())
             {
-                var items = _boardTracker.Items.Where(item => item.gameObject.activeInHierarchy && item.Type == type).Take(ItemCount);
+                var filteredItems = _boardTracker.Items.Where(item => item.gameObject.activeInHierarchy && item.Type == type && item.IsColliderEnabled).ToList();
+                var items = filteredItems.Count >= 3 ? filteredItems.Take(ItemCount) : new List<ItemPrototype>();
 
                 var count = 0;
                 foreach (var item in items)

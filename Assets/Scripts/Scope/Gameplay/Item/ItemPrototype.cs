@@ -16,6 +16,8 @@ namespace ProjectMM.Scope.Gameplay.Item
 
         public PrototypeData.ItemType Type { get; private set; }
 
+        public bool IsColliderEnabled => _MeshCollider.enabled;
+
         private void OnDisable()
         {
             _MeshCollider.enabled = true;
