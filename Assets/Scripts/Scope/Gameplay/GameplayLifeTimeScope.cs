@@ -1,6 +1,6 @@
+using ProjectMM.Scope.Gameplay.Boosters;
 using ProjectMM.Scope.Gameplay.Item;
 using ProjectMM.Scope.Gameplay.Level;
-using ProjectMM.Scope.Gameplay.Presenters;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -22,6 +22,8 @@ namespace ProjectMM.Scope.Gameplay
             builder.Register<BoardTracker>(Lifetime.Scoped);
             builder.Register<LevelLoader>(Lifetime.Scoped);
             builder.Register<ItemSlotsController>(Lifetime.Scoped);
+            builder.Register<BoosterController>(Lifetime.Scoped);
+
             builder.Register<LevelTimer>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces();
     
             builder.RegisterComponent(_GameplaySceneInitializer);

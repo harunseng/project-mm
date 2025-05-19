@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using ProjectMM.Scope.Gameplay.Item;
 using UnityEngine;
 
-namespace ProjectMM.Scope.Gameplay.Presenters
+namespace ProjectMM.Scope.Gameplay.Item
 {
     [UnityEngine.Scripting.Preserve]
     public class ItemSlotsController

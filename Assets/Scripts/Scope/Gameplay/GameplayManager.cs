@@ -80,7 +80,7 @@ namespace ProjectMM.Scope.Gameplay
                 return;
             }
 
-            if (Input.GetMouseButtonDown(0) && !_isUnputDisabled)
+            if (Input.GetMouseButtonDown(0) && !_isUnputDisabled && !_isGamePaused)
             {
                 CheckItem();
             }

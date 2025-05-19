@@ -9,12 +9,23 @@ namespace ProjectMM.Scope.Gameplay.Level
     {
         public event Action TimerEnd;
         public event Action<int> TimerTick;
+        public event Action<bool> TimerStateChanged;
 
+        private bool _isRunning;
         private float _seconds;
         private int _lastWholeSeconds;
 
-        public bool IsRunning { get; set; }
         public int RemainingSeconds => _lastWholeSeconds;
+
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set
+            {
+                _isRunning = value;
+                TimerStateChanged?.Invoke(_isRunning);
+            }
+        }
 
         public void SetTimer(float seconds)
         {
@@ -24,7 +35,7 @@ namespace ProjectMM.Scope.Gameplay.Level
 
         public void Tick()
         {
-            if (_seconds <= 0 || !IsRunning)
+            if (_seconds <= 0 || !_isRunning)
             {
                 return;
             }
@@ -40,7 +51,7 @@ namespace ProjectMM.Scope.Gameplay.Level
 
             if (_seconds <= 0)
             {
-                IsRunning = false;
+                _isRunning = false;
                 _seconds = 0;
                 TimerEnd?.Invoke();
             }

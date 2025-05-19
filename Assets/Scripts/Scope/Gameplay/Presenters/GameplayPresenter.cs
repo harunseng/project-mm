@@ -1,5 +1,6 @@
 using ProjectMM.Core.Common.Presenter;
 using ProjectMM.Core.Services;
+using ProjectMM.Scope.Gameplay.Item;
 using ProjectMM.Scope.Gameplay.Level;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace ProjectMM.Scope.Gameplay.Presenters
 
         [SerializeField] private TextMeshProUGUI _Level;
         [SerializeField] private TextMeshProUGUI _Timer;
+        [SerializeField] private Image _TimerState;
         [SerializeField] private Button _Close;
 
         [SerializeField] private Transform[] _Slots;
@@ -36,6 +38,7 @@ namespace ProjectMM.Scope.Gameplay.Presenters
         private void OnEnable()
         {
             _levelTimer.TimerTick += OnTimerTick;
+            _levelTimer.TimerStateChanged += OnTimerStateChanged;
 
             _Close.onClick.AddListener(OnCloseButtonClicked);
         }
@@ -43,8 +46,14 @@ namespace ProjectMM.Scope.Gameplay.Presenters
         private void OnDisable()
         {
             _levelTimer.TimerTick -= OnTimerTick;
+            _levelTimer.TimerStateChanged -= OnTimerStateChanged;
 
             _Close.onClick.RemoveListener(OnCloseButtonClicked);
+        }
+
+        private void OnTimerStateChanged(bool isRunning)
+        {
+            _TimerState.color = isRunning ? Color.white : Color.red;
         }
 
         private void OnTimerTick(int seconds)

@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using ProjectMM.Core.Services;
@@ -7,7 +6,6 @@ using ProjectMM.Scope.Root;
 using ProjectMM.Utils;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
 
 namespace ProjectMM.Scope.Gameplay.Level
@@ -73,6 +71,8 @@ namespace ProjectMM.Scope.Gameplay.Level
                     item.gameObject.SetActive(true);
                     item.transform.position = new Vector3(Random.Range(-3, 3), 3 + Random.Range(layout.minVolume, layout.maxVolume), Random.Range(-5, 5));
                     item.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+
+                    _boardTracker.Items.Add(item);
                 }
 
                 _boardTracker.AddItemCount(layout.type, itemCount);

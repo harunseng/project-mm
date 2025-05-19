@@ -7,12 +7,14 @@ namespace ProjectMM.Scope.Gameplay.Level
     [UnityEngine.Scripting.Preserve]
     public class BoardTracker
     {
-        private readonly Dictionary<PrototypeData.ItemType, int> _items = new();
-
         public event Action<PrototypeData.ItemType, int> OrderCountChanged;
         public event Action OrdersCompleted;
 
+        private readonly Dictionary<PrototypeData.ItemType, int> _items = new();
+
         public Dictionary<PrototypeData.ItemType, int> Orders { get; } = new();
+
+        public List<ItemPrototype> Items { get; } = new();
 
         public void AddItemCount(PrototypeData.ItemType type, int count)
         {
@@ -38,8 +40,13 @@ namespace ProjectMM.Scope.Gameplay.Level
                 return;
             }
 
-            Orders[type] -= count;
-            OrderCountChanged?.Invoke(type, Orders[type]);
+            var oldCount = Orders[type];
+            var newCount = Math.Clamp(oldCount - count, 0, int.MaxValue);
+            if (oldCount != newCount)
+            {
+                Orders[type] = newCount;
+                OrderCountChanged?.Invoke(type, Orders[type]);
+            }
 
             var remainingOrders = 0;
             foreach (var order in Orders)
