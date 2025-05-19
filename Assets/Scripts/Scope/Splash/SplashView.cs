@@ -15,8 +15,9 @@ namespace ProjectMM.Scope.Splash
 
         #endregion
 
-        public void Start()
+        public async void Start()
         {
+            await UniTask.Delay(500);
             SceneLoader.LoadSceneAsync(GameConstants.SceneNames.Home, this.GetCancellationTokenOnDestroy(), new Progress<float>(progress => _ProgressBar.SetFillAmount(progress))).Forget();
         }
     }

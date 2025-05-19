@@ -28,9 +28,12 @@ namespace ProjectMM.Core.Services
             return _cachedData;
         }
 
-        public void Clear()
+        public void Reset()
         {
             PlayerPrefs.DeleteKey(PlayerDataKey);
+            _cachedData = default;
+            _cachedData.level = 1;
+            Save(_cachedData);
         }
     }
 }
