@@ -36,7 +36,7 @@ namespace ProjectMM.Scope.Gameplay
         private static int _itemsLayerMask;
 
         private Camera _camera;
-        private bool _isUnputDisabled;
+        private bool _isInputDisabled;
         private bool _isGamePaused;
 
         private void Awake()
@@ -74,13 +74,13 @@ namespace ProjectMM.Scope.Gameplay
 
         public void Update()
         {
-            if (_slotController.IsSlotsFull)
+            if (_slotController.IsSlotsFull && !_isInputDisabled)
             {
                 ShowGameOver().Forget();
                 return;
             }
 
-            if (Input.GetMouseButtonDown(0) && !_isUnputDisabled && !_isGamePaused)
+            if (Input.GetMouseButtonDown(0) && !_isInputDisabled && !_isGamePaused)
             {
                 CheckItem();
             }
@@ -108,7 +108,7 @@ namespace ProjectMM.Scope.Gameplay
             var remaining = _boardTracker.GetCount(item.Type);
             var count = matches?.Count;
             var isMatched = (count == MatchCount || count == remaining);
-            _isUnputDisabled = isMatched;
+            _isInputDisabled = isMatched;
 
             item.MoveToSlot(position, isMatched ? () => DestroyMatchedItems(matches) : null);
         }
@@ -126,7 +126,7 @@ namespace ProjectMM.Scope.Gameplay
             }
             _boardTracker.RemoveItemCount(items[0].Type, items.Count);
             _slotController.ReleaseLastMatchedSlots();
-            DOVirtual.DelayedCall(0.5f, () => _isUnputDisabled = false);
+            DOVirtual.DelayedCall(0.5f, () => _isInputDisabled = false);
         }
 
         private void OnOrdersCompleted()
