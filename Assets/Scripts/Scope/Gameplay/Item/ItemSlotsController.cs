@@ -79,7 +79,7 @@ namespace ProjectMM.Scope.Gameplay.Item
 
                 var newIndex = i - _lastMatchedItems.count;
                 _items[newIndex] = _items[i];
-                _items[i].ShitPreviousSlot(_slots[newIndex].position, _lastMatchedItems.count);
+                _items[i].ShiftPreviousSlot(_slots[newIndex].position, _lastMatchedItems.count);
                 _items[i] = null;
             }
         }

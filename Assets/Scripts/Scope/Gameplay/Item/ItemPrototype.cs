@@ -75,7 +75,7 @@ namespace ProjectMM.Scope.Gameplay.Item
             seq.Play();
         }
 
-        public void ShitPreviousSlot(Vector3 position, int step)
+        public void ShiftPreviousSlot(Vector3 position, int step)
         {
             DOTween.Kill(transform, true);
 
